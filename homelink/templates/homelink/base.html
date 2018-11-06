@@ -1,0 +1,42 @@
+{% load static %}
+
+<html lang="en">
+<head>
+<title>{% block title %}Django+Python爬取链接二手房信息{% endblock %} </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        ul li {
+        display:inline;
+        list-style-type:none;
+        }
+    </style>
+</head>
+
+<body>
+ <!-- Page content of course! -->
+<main>
+    <div class="container">
+    {% block content %}
+  {% if error_message %}<p><strong>{{ error_message}}</strong></p>{% endif %}
+  {% endblock %}
+        </div>
+</main>
+
+
+<footer class="footer">
+  {% block footer %}{% endblock %}
+</footer>
+<!--End of Footer-->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+

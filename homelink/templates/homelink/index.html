@@ -1,0 +1,94 @@
+
+{% extends "homelink/base.html" %}
+
+
+{% block content %}
+
+<h3>爬取上海链家二手房信息</h3>
+<form method="POST" class="form-horizontal" role='form' action="{% url 'homelink:house_spider' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+   <div class="form-group">
+       <div class="col-md-12">
+  <button type="submit" class="btn btn-primary form-control">开始爬取</button>
+       </div>
+   </div>
+</form>
+
+{% if page_obj %}
+<h3>爬取二手房结果</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>标题</th>
+            <th>小区</th>
+            <th>房厅</th>
+            <th>面积</th>
+            <th>板块</th>
+            <th>总价(万)</th>
+            <th>单价(元/平方米)</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for house in page_obj %}
+        <tr>
+            <td>
+            {{ house.title }}
+            </td>
+            <td>
+            {{ house.house }}
+            </td>
+            <td>
+            {{ house.bedroom }}
+            </td>
+             <td>
+             {{ house.area }}
+            </td>
+            <td>
+             {{ house.location }}
+            </td>
+             <td>
+            {{ house.total_price }}
+            </td>
+            <td>
+                {{ house.unit_price }}
+            </td>
+     {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% else %}
+{# 注释: 这里可以换成自己的对象 #}
+    <p>尚无二手房信息。</p>
+
+{% endif %}
+
+
+{# 注释: 下面代码实现分页 #}
+{% if is_paginated %}
+     <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    {% endif %}
+
+    {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+      <li class="page-item active"><span class="page-link"> {{ i }} <span class="sr-only">(current)</span></span></li>
+       {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+       {% endif %}
+    {% endfor %}
+
+         {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    {% endif %}
+    </ul>
+
+{% endif %}
+
+{% endblock %}
