@@ -15,9 +15,9 @@ import re
 
 def house_index(request):
     form = HouseChoiceForm()
-    house_list = HouseInfo.objects.all()
+    house_list = HouseInfo.objects.all().order_by('-add_date')
     if house_list:
-        paginator = Paginator(house_list, 10)
+        paginator = Paginator(house_list, 20)
         page = request.GET.get('page')
         page_obj = paginator.get_page(page)
 
@@ -94,8 +94,6 @@ class HomeLinkSpider(object):
                     detail['floor'] = match1.group()
                 else:
                     detail['floor'] = "未知"
-
-                detail['floor'] = re.search(floor_pattern, position_info[0]).group()  # 从字符串头部开始匹配
 
                 year_pattern = re.compile(r'\d{4}')
                 match2 = re.search(year_pattern, position_info[0])  # 从字符串任意位置匹配

@@ -1,7 +1,6 @@
 
 {% extends "homelink/base.html" %}
 
-
 {% block content %}
 
 <h3>爬取上海链家二手房信息</h3>
@@ -24,6 +23,7 @@
             <th>小区</th>
             <th>房厅</th>
             <th>面积</th>
+            <th>年份</th>
             <th>板块</th>
             <th>总价(万)</th>
             <th>单价(元/平方米)</th>
@@ -43,6 +43,9 @@
             </td>
              <td>
              {{ house.area }}
+            </td>
+             <td>
+             {{ house.year }}
             </td>
             <td>
              {{ house.location }}
